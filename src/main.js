@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
+import auth from './mixins/auth'
 import MuseUI from 'muse-ui'
 import 'muse-ui/dist/muse-ui.css'
 Vue.use(MuseUI)
@@ -14,6 +15,7 @@ new Vue({
   el: '#app',
   router,
   store,
+  mixins: [auth],
   template: '<App/>',
   components: { App }
 })
