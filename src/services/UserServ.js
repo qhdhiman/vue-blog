@@ -27,8 +27,22 @@ const signin = async ({name, password}) => {
   const res = await $http.post(`${act}/signin`, params).then(res => res.json())
   return res
 }
+/**
+ * 退出操作
+ * @param name
+ * @param password
+ * @returns {Promise.<TResult>}
+ */
+const signout = async ({name, password}) => {
+  const params = {
+    name, password
+  }
+  const res = await $http.post(`${act}/signout`, params).then(res => res.json())
+  return res
+}
 export default {
   signup,
-  signin
+  signin,
+  signout
 }
 

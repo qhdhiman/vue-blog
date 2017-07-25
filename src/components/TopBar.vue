@@ -1,11 +1,13 @@
 <template>
   <div>
     <mu-appbar title="知识库">
-      <mu-avatar src="static/avatar.jpg" slot="left"/>
+      <mu-avatar :src="loginUser.head" slot="left"/>
       <mu-icon-menu icon="more_vert" slot="right"  @change="handleChange">
-        <mu-menu-item title="注册" value="signup"/>
-        <mu-menu-item title="登录" value="signin" />
-        <mu-menu-item title="退出" value="signout" />
+        <template v-if="!loginUser.name">
+          <mu-menu-item title="注册" value="signup"/>
+          <mu-menu-item title="登录" value="signin" />
+        </template>
+        <mu-menu-item v-else title="退出" value="signout" />
       </mu-icon-menu>
     </mu-appbar>
     <dialog-signin v-model="signin"></dialog-signin>
@@ -14,6 +16,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import DialogSignin from '@/components/dialog/Signin'
 import DialogSignup from '@/components/dialog/Signup'
 export default {
@@ -24,7 +27,11 @@ export default {
       signin: false
     }
   },
+  computed: {
+    ...mapGetters({loginUser: 'loginUser'})
+  },
   methods: {
+    ...mapActions({signout: 'signout'}), // 映射 this.signin() 为 this.$store.dispatch('signin')
     handleChange (value) {
       switch (value) {
         case 'signin':
@@ -34,6 +41,7 @@ export default {
           this.signup = true
           break
         case 'signout':
+          this.signout()
           break
       }
     }

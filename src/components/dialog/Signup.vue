@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import UserServ from '@/services/UserServ'
+import { mapActions } from 'vuex'
 export default {
   name: 'signup',
   props: {
@@ -36,13 +36,16 @@ export default {
     close () {
       this.$emit('input', false)
     },
+    ...mapActions({
+      signup: 'signup' // 映射 this.signup() 为 this.$store.dispatch('signup')
+    }),
     async save () {
       const params = {
         name: this.name,
         phone: this.phone,
         password: this.password
       }
-      const res = await UserServ.signup(params)
+      const res = await this.signup(params)
       if (res.result === 'ok') {
         this.toast.showToast({message: '保存成功'})
         this.close()

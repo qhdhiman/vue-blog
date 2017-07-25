@@ -10,7 +10,8 @@
 </template>
 
 <script>
-  import UserServ from '@/services/UserServ'
+  import { mapActions } from 'vuex'
+
   export default {
     name: 'signin',
     props: {
@@ -34,12 +35,15 @@
       close () {
         this.$emit('input', false)
       },
+      ...mapActions({
+        signin: 'signin' // 映射 this.signin() 为 this.$store.dispatch('signin')
+      }),
       async save () {
         const params = {
           name: this.name,
           password: this.password
         }
-        const res = await UserServ.signin(params)
+        const res = await this.signin(params)
         if (res.result === 'ok') {
           this.toast.showToast({message: '登录成功'})
           this.close()
