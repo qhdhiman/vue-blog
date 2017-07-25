@@ -21,7 +21,7 @@
     </mu-list>
     <mu-infinite-scroll v-if="!isEnd" :scroller="scroller" :loading="loading" @load="loadMore"/>
     <p class="text-center" v-else>已经到底了</p>
-    <mu-float-button icon="add" class="fixed-button" :to="{path:'add'}"/>
+    <mu-float-button v-if="$root.isLogin" icon="add" class="fixed-button" :to="{path:'add'}"/>
   </div>
 </template>
 <script>
