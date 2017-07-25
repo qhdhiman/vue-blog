@@ -1,34 +1,55 @@
 <template>
   <mu-dialog :open="value" title="登录" titleClass="title" @close="close">
-    <!--<mu-appbar title="登录">-->
-    <!--</mu-appbar>-->
     <mu-card-text>
-      <mu-text-field label="用户名\手机号" labelFloat v-model="name" :fullWidth="true"/>
+      <mu-text-field label="用户名" labelFloat v-model="name" :fullWidth="true"/>
       <mu-text-field label="密码" type="password" labelFloat v-model="password" :fullWidth="true"/>
     </mu-card-text>
-    <mu-flat-button slot="actions" @click="close" primary label="取消"/>
-    <mu-flat-button slot="actions" primary @click="close" label="确定"/>
+    <mu-raised-button slot="actions" label="取消" @click="close" />
+    <mu-raised-button slot="actions" label="登录" :disabled="!canSave" @click="save" primary/>
   </mu-dialog>
 </template>
 
 <script>
-export default {
-  name: 'dialog',
-  props: {
-    value: [Boolean]
-  },
-  data () {
-    return {
-      name: '',
-      password: ''
-    }
-  },
-  methods: {
-    close () {
-      this.$emit('input', false)
+  import UserServ from '@/services/UserServ'
+  export default {
+    name: 'signin',
+    props: {
+      value: [Boolean]
+    },
+    data () {
+      return {
+        name: '',
+        password: ''
+      }
+    },
+    computed: {
+      canSave () {
+        return this.name && this.password
+      },
+      toast () {
+        return this.$root.$children[0]
+      }
+    },
+    methods: {
+      close () {
+        this.$emit('input', false)
+      },
+      async save () {
+        const params = {
+          name: this.name,
+          password: this.password
+        }
+        const res = await UserServ.signin(params)
+        if (res.result === 'ok') {
+          this.close()
+          this.toast.showToast({message: '登录成功'})
+          this.$router.back()
+        } else {
+          this.toast.showToast({message: `登录失败:${res.data}`})
+        }
+      }
     }
   }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

@@ -2,17 +2,18 @@
   <mu-dialog :open="value" title="注册" titleClass="title" @close="close">
     <mu-card-text>
       <mu-text-field label="用户名" labelFloat v-model="name" :fullWidth="true"/>
-      <mu-text-field label="手机号" labelFloat v-model="name" :fullWidth="true"/>
+      <mu-text-field label="手机号" labelFloat v-model="phone" :fullWidth="true"/>
       <mu-text-field label="密码" type="password" labelFloat v-model="password" :fullWidth="true"/>
     </mu-card-text>
-    <mu-flat-button slot="actions" @click="close" primary label="取消"/>
-    <mu-flat-button slot="actions" primary @click="close" label="确定"/>
+    <mu-raised-button slot="actions" label="取消" @click="close" />
+    <mu-raised-button slot="actions" label="注册" :disabled="!canSave" @click="save" primary/>
   </mu-dialog>
 </template>
 
 <script>
+import UserServ from '@/services/UserServ'
 export default {
-  name: 'dialog',
+  name: 'signup',
   props: {
     value: [Boolean]
   },
@@ -23,9 +24,32 @@ export default {
       password: ''
     }
   },
+  computed: {
+    canSave () {
+      return this.name && this.phone && this.password
+    },
+    toast () {
+      return this.$root.$children[0]
+    }
+  },
   methods: {
     close () {
       this.$emit('input', false)
+    },
+    async save () {
+      const params = {
+        name: this.name,
+        phone: this.phone,
+        password: this.password
+      }
+      const res = await UserServ.signup(params)
+      if (res.result === 'ok') {
+        this.close()
+        this.toast.showToast({message: '保存成功'})
+        this.$router.back()
+      } else {
+        this.toast.showToast({message: `注册失败:${res.data}`})
+      }
     }
   }
 }
