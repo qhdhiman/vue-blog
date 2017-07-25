@@ -8,7 +8,7 @@
           <mu-card-header title="邵铁军" subTitle="欲望以提升热情 毅力以磨平高山">
             <mu-avatar src="static/avatar.jpg" slot="avatar"/>
           </mu-card-header>
-          <mu-card-title :title="item.title" :subTitle="item.create_time"/>
+          <mu-card-title :title="item.title" :subTitle="item.create_time | time"/>
           <mu-card-text>
             {{item.content}}
           </mu-card-text>
@@ -27,6 +27,8 @@
 <script>
 import TopBar from '@/components/TopBar'
 import ArticleServ from '@/services/ArticleServ'
+import Moment from 'moment'
+Moment.locale('zh-cn')
 export default {
   name: 'All',
   data () {
@@ -41,6 +43,11 @@ export default {
         page: 0,
         limit: 5
       }
+    }
+  },
+  filters: {
+    time (value) {
+      return Moment(value).fromNow()
     }
   },
   async mounted () {
