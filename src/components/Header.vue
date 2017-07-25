@@ -1,5 +1,6 @@
 <template>
   <mu-appbar title="知识库">
+    <mu-avatar src="static/avatar.jpg" slot="left"/>
     <mu-icon-menu icon="more_vert" slot="right">
       <mu-menu-item v-for="btn in buttons" :title="btn"/>
     </mu-icon-menu>
