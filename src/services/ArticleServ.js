@@ -11,11 +11,25 @@ const all = async ({page, limit}) => {
     limit: limit
   }
   const res = await $http.get(`${act}/all`, {params: params}).then(res => res.json())
-  console.log('res', res)
+  return res
+}
+/**
+ * 添加文章
+ * @param title
+ * @param content
+ * @param tags
+ * @returns {res}
+ */
+const add = async ({title, content, tags}) => {
+  const params = {
+    title, content, tags
+  }
+  const res = await $http.post(`${act}/add`, params).then(res => res.json())
   return res
 }
 
 export default {
-  all
+  all,
+  add
 }
 

@@ -1,13 +1,14 @@
 <template>
   <div class="container">
+    <Header></Header>
     <mu-refresh-control :refreshing="refreshing" :trigger="el" @refresh="refresh"/>
     <mu-list>
       <template v-for="item in list">
         <mu-card>
           <mu-card-header title="邵铁军" subTitle="欲望以提升热情 毅力以磨平高山">
-            <mu-avatar src="http://www.muse-ui.org/images/uicon.jpg" slot="avatar"/>
+            <mu-avatar src="static/avatar.jpg" slot="avatar"/>
           </mu-card-header>
-          <mu-card-title :title="item.title" subTitle=""/>
+          <mu-card-title :title="item.title" :subTitle="item.create_time"/>
           <mu-card-text>
             {{item.content}}
           </mu-card-text>
@@ -19,11 +20,15 @@
       </template>
     </mu-list>
     <mu-infinite-scroll v-if="!isEnd" :scroller="scroller" :loading="loading" @load="loadMore"/>
+    <p class="text-center" v-else>已经到底了</p>
+    <mu-float-button icon="add" class="fixed-button" :to="{path:'add'}"/>
   </div>
 </template>
 <script>
+import Header from '@/components/Header'
 import ArticleServ from '@/services/ArticleServ'
 export default {
+  name: 'All',
   data () {
     return {
       list: [],
@@ -47,6 +52,7 @@ export default {
     async refresh () {
       this.paging.page = 0
       this.refreshing = true
+      this.isEnd = false
       const res = await ArticleServ.all(this.paging)
       this.list = res.data
       this.refreshing = false
@@ -60,18 +66,21 @@ export default {
       this.list.push(...res.data)
       this.loading = false
     }
+  },
+  components: {
+    Header
   }
 }
 </script>
 
-<style>
-  .container {
-    background-color: #F7F7F5;
-    position: absolute;
-    width:100%;
-    height:100%;
-    bottom:0;
-    overflow-y: auto;
+<style scoped>
+  .fixed-button {
+    position: fixed;
+    right:15px;
+    bottom: 45px;
+  }
+  .mu-list {
+    padding:0;
   }
   .mu-card {
     margin-top: 10px;
@@ -86,5 +95,8 @@ export default {
   }
   .mu-card-actions {
     text-align: right;
+  }
+  .text-center {
+    text-align: center;
   }
 </style>
