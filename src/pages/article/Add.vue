@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Header></Header>
+    <TopBar></TopBar>
     <mu-card>
       <mu-card-header>
         <mu-text-field label="主题" labelFloat v-model="title"/>
@@ -15,7 +15,7 @@
   </div>
 </template>
 <script>
-import Header from '@/components/Header'
+import TopBar from '@/components/TopBar'
 import ArticleServ from '@/services/ArticleServ'
 export default {
   name: 'Add',
@@ -50,7 +50,7 @@ export default {
     }
   },
   components: {
-    Header
+    TopBar
   }
 }
 </script>
