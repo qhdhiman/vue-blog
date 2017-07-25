@@ -44,9 +44,8 @@ export default {
       }
       const res = await UserServ.signup(params)
       if (res.result === 'ok') {
-        this.close()
         this.toast.showToast({message: '保存成功'})
-        this.$router.back()
+        this.close()
       } else {
         this.toast.showToast({message: `注册失败:${res.data}`})
       }

@@ -17,7 +17,6 @@ export default {
   },
   methods: {
     showToast ({message, duration = 2000}) {
-      if (toastTimer) return
       this.toastMsg = message
       this.toast = true
       toastTimer = setTimeout(() => {

@@ -41,9 +41,8 @@
         }
         const res = await UserServ.signin(params)
         if (res.result === 'ok') {
-          this.close()
           this.toast.showToast({message: '登录成功'})
-          this.$router.back()
+          this.close()
         } else {
           this.toast.showToast({message: `登录失败:${res.data}`})
         }
