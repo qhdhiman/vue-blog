@@ -28,6 +28,18 @@ const signin = async ({name, password}) => {
   return res
 }
 /**
+ * 获取用户登录信息
+ * @param token
+ * @returns {Promise.<TResult>}
+ */
+const getLoginUser = async (token) => {
+  const params = {
+    token
+  }
+  const res = await $http.post(`${act}/getLoginUser`, params).then(res => res.json())
+  return res
+}
+/**
  * 退出操作
  * @param name
  * @param password
@@ -43,6 +55,7 @@ const signout = async ({name, password}) => {
 export default {
   signup,
   signin,
+  getLoginUser,
   signout
 }
 

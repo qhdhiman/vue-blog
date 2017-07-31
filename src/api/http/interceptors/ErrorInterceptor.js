@@ -6,8 +6,8 @@ export default (request, next) => {
     if (!response.ok) {
       console.error(response.data)
     } else {
-      if (response.data.result && response.data.result !== '200') {
-        console.error(response.data)
+      if (response.data.result !== 'ok') {
+        console.error(response.data.data)
       }
     }
   })
