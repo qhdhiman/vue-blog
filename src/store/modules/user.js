@@ -39,8 +39,12 @@ const actions = {
     return res
   },
   async signup ({commit, state}, user) {
-    const res = await UserServ.signin(user)
-    if (res.result === 'ok') commit(types.SET_LOGIN_USER, res.data)
+    const res = await UserServ.signup(user)
+    if (res.result === 'ok') {
+      TokenServ.setItem(res.data.token)
+      delete res.data.token
+      commit(types.SET_LOGIN_USER, res.data)
+    }
     return res
   },
   async signout ({commit, state}) {
