@@ -1,6 +1,6 @@
 import * as types from '../mutations-type'
 import UserServ from '@/services/UserServ'
-import Token from '@/api/Token'
+import TokenServ from '@/api/Token'
 /**
  * 登录用户信息
  * @type {{user: {name: string, password: string, head: string, phone: string}}}
@@ -22,11 +22,10 @@ const actions = {
   async signin ({commit, state}, user) {
     const res = await UserServ.signin(user)
     if (res.result === 'ok') {
-      console.log(res)
-      const _token = res.data.token
-      const user = await UserServ.getLoginUser(_token)
+      const token = res.data.token
+      TokenServ.setItem(token)
+      const user = await UserServ.getLoginUser(token)
       if (user.result === 'ok') {
-        Token.setItem(res.data.token)
         commit(types.SET_LOGIN_USER, user.data)
       }
     }
@@ -45,9 +44,12 @@ const actions = {
     return res
   },
   async signout ({commit, state}) {
-    // const res = await UserServ.signout(state.user)
-    // if (res.result === 'ok')
+    // const res = await UserServ.signout()
+    // if (res.result === 'ok') {
+    TokenServ.setItem('')
     commit(types.SET_LOGIN_USER, {})
+    // }
+    // return res
   }
 }
 

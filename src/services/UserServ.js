@@ -45,9 +45,8 @@ const getLoginUser = async (token) => {
  * @param password
  * @returns {Promise.<TResult>}
  */
-const signout = async ({name, password}) => {
+const signout = async () => {
   const params = {
-    name, password
   }
   const res = await $http.post(`${act}/signout`, params).then(res => res.json())
   return res

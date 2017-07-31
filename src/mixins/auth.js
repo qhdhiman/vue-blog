@@ -1,5 +1,5 @@
 import { mapGetters, mapActions } from 'vuex'
-
+import TokenServ from '@/api/Token'
 export default {
   computed: {
     ...mapGetters({loginUser: 'loginUser'}),
@@ -8,6 +8,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions({signout: 'signout'}) // 映射 this.signin() 为 this.$store.dispatch('signin')
+    ...mapActions({signout: 'signout', getLoginUser: 'getLoginUser'}) // 映射 this.signin() 为 this.$store.dispatch('signin')
+  },
+  mounted () { // 使用token获取用户登录信息
+    const token = TokenServ.getItem()
+    if (token) this.getLoginUser(token)
   }
 }
