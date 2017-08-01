@@ -5,7 +5,7 @@
     <mu-list>
       <template v-for="item in list">
         <mu-card>
-          <mu-card-header @click.native="goList(item['user_id']._id)" v-if="item['user_id']" :title="item['user_id'].name" subTitle="欲望以提升热情 毅力以磨平高山">
+          <mu-card-header @click="goList(item['user_id']._id)" v-if="item['user_id']" :title="item['user_id'].name" subTitle="欲望以提升热情 毅力以磨平高山">
             <mu-avatar :src="item['user_id'].head" slot="avatar"/>
           </mu-card-header>
           <mu-card-title :title="item.title" :subTitle="item.create_time | time"/>
@@ -30,9 +30,10 @@ import ArticleServ from '@/services/ArticleServ'
 import Moment from 'moment'
 Moment.locale('zh-cn')
 export default {
-  name: 'All',
+  name: 'List',
   data () {
     return {
+      userId: this.$route.params._uId,
       list: [],
       refreshing: false,
       loading: false,
@@ -60,7 +61,7 @@ export default {
       this.paging.page = 0
       this.refreshing = true
       this.isEnd = false
-      const res = await ArticleServ.all(this.paging)
+      const res = await ArticleServ.listByUserId(this.userId, this.paging)
       this.list = res.data
       this.refreshing = false
     },
@@ -68,14 +69,10 @@ export default {
       console.log('loadMore')
       this.paging.page += 1
       this.loading = true
-      const res = await ArticleServ.all(this.paging)
+      const res = await ArticleServ.listByUserId(this.userId, this.paging)
       this.isEnd = res.data.length <= 0
       this.list.push(...res.data)
       this.loading = false
-    },
-    goList (_uId) {
-      console.log('userid', _uId)
-      this.$router.push({name: 'list', params: { _uId }})
     }
   },
   components: {

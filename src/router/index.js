@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import All from '@/pages/article/All'
+import List from '@/pages/article/List'
 import Add from '@/pages/article/Add'
 
 import Signin from '@/pages/user/Signin'
@@ -12,19 +13,23 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'All',
+      name: 'all',
       component: All
     }, {
+      path: '/list/:_uId',
+      name: 'list',
+      component: List
+    }, {
       path: '/add',
-      name: 'Add',
+      name: 'add',
       component: Add
     }, {
       path: '/signin',
-      name: 'Signin',
+      name: 'signin',
       component: Signin
     }, {
       path: '/signup',
-      name: 'Signup',
+      name: 'signup',
       component: Signup
     }
     // , {

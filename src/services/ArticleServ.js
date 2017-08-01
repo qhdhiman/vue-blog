@@ -14,6 +14,20 @@ const all = async ({page, limit}) => {
   return res
 }
 /**
+ * 获取默一用户文章列表
+ * @param userId 用户id
+ * @param page 当前页
+ * @param limit 条数
+ */
+const listByUserId = async (userId, {page, limit}) => {
+  const params = {
+    page: page,
+    limit: limit
+  }
+  const res = await $http.get(`${act}/list/${userId}`, {params: params}).then(res => res.json())
+  return res
+}
+/**
  * 添加文章
  * @param title
  * @param content
@@ -29,6 +43,7 @@ const add = async ({title, content, tags}) => {
 }
 
 export default {
+  listByUserId,
   all,
   add
 }

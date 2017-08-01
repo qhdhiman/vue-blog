@@ -44,6 +44,10 @@ export default {
     -webkit-overflow-scrolling: touch;
     box-sizing: border-box;
   }
+  .mu-list {
+    max-width: 1024px;
+    margin: auto;
+  }
   .mu-toast{
     width:auto;
   }
