@@ -15,6 +15,7 @@
           <mu-card-actions>
             <mu-flat-button label="点赞"/>
             <mu-flat-button label="评论"/>
+            <mu-flat-button label="收藏"/>
           </mu-card-actions>
         </mu-card>
       </template>

@@ -41,10 +41,23 @@ const add = async ({title, content, tags}) => {
   const res = await $http.post(`${act}/add`, params).then(res => res.json())
   return res
 }
-
+/**
+ * 评论
+ * @param articleId
+ * @param comment
+ * @returns {Promise.<TResult>}
+ */
+const comment = async ({articleId, comment}) => {
+  const params = {
+    articleId, comment
+  }
+  const res = await $http.post(`${act}/comment`, params).then(res => res.json())
+  return res
+}
 export default {
   listByUserId,
   all,
-  add
+  add,
+  comment
 }
 

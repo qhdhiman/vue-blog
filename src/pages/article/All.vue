@@ -13,9 +13,19 @@
             {{item.content}}
           </mu-card-text>
           <mu-card-actions>
-            <mu-flat-button label="点赞"/>
-            <mu-flat-button label="评论"/>
+            <Actions :article="item"></Actions>
           </mu-card-actions>
+          <mu-list>
+            <mu-sub-header>评论</mu-sub-header>
+            <mu-divider/>
+            <template v-for="comment in item.comments">
+              <mu-list-item :title="comment.comment">
+                <mu-avatar :src="comment.user.head" slot="leftAvatar"/>
+                <mu-icon value="chat_bubble" slot="right"/>
+              </mu-list-item>
+              <mu-divider/>
+            </template>
+          </mu-list>
         </mu-card>
       </template>
     </mu-list>
@@ -26,6 +36,7 @@
 </template>
 <script>
 import TopBar from '@/components/TopBar'
+import Actions from '@/components/Actions'
 import ArticleServ from '@/services/ArticleServ'
 import Moment from 'moment'
 Moment.locale('zh-cn')
@@ -79,7 +90,8 @@ export default {
     }
   },
   components: {
-    TopBar
+    TopBar,
+    Actions
   }
 }
 </script>
