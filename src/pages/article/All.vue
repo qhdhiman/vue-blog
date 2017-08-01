@@ -5,8 +5,8 @@
     <mu-list>
       <template v-for="item in list">
         <mu-card>
-          <mu-card-header @click.native="goList(item['user_id']._id)" v-if="item['user_id']" :title="item['user_id'].name" subTitle="欲望以提升热情 毅力以磨平高山">
-            <mu-avatar :src="item['user_id'].head" slot="avatar"/>
+          <mu-card-header  v-if="item['owner']" @click.native="goList(item['owner']._id)" :title="item['owner'].name" subTitle="欲望以提升热情 毅力以磨平高山">
+            <mu-avatar :src="item['owner'].head" slot="avatar"/>
           </mu-card-header>
           <mu-card-title :title="item.title" :subTitle="item.create_time | time"/>
           <mu-card-text>
@@ -15,15 +15,14 @@
           <mu-card-actions>
             <Actions :article="item"></Actions>
           </mu-card-actions>
-          <mu-list>
+          <mu-list v-if="item.comments.length > 0">
             <mu-sub-header>评论</mu-sub-header>
-            <mu-divider/>
-            <template v-for="comment in item.comments">
+            <template v-for="comment in item.comments" v-if="comment.user">
+              <mu-divider/>
               <mu-list-item :title="comment.comment">
                 <mu-avatar :src="comment.user.head" slot="leftAvatar"/>
                 <mu-icon value="chat_bubble" slot="right"/>
               </mu-list-item>
-              <mu-divider/>
             </template>
           </mu-list>
         </mu-card>
