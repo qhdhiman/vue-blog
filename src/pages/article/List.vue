@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <TopBar></TopBar>
     <mu-refresh-control :refreshing="refreshing" :trigger="el" @refresh="refresh"/>
     <mu-list>
       <template v-for="item in list">
@@ -26,7 +25,6 @@
   </div>
 </template>
 <script>
-import TopBar from '@/components/TopBar'
 import ArticleServ from '@/services/ArticleServ'
 import Moment from 'moment'
 Moment.locale('zh-cn')
@@ -75,9 +73,6 @@ export default {
       this.list.push(...res.data)
       this.loading = false
     }
-  },
-  components: {
-    TopBar
   }
 }
 </script>

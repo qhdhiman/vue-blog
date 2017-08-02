@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <TopBar></TopBar>
     <router-view></router-view>
     <mu-toast class="bottom" v-if="toast" :message="toastMsg" @close="hideToast"/>
   </div>
@@ -7,6 +8,7 @@
 
 <script>
 let toastTimer
+import TopBar from '@/components/TopBar'
 export default {
   name: 'app',
   data () {
@@ -27,6 +29,9 @@ export default {
       this.toast = false
       clearTimeout(toastTimer)
     }
+  },
+  components: {
+    TopBar
   }
 }
 </script>
