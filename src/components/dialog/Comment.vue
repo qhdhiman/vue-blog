@@ -1,7 +1,7 @@
 <template>
   <mu-dialog :open="value" title="评论" titleClass="title" @close="close">
     <mu-card-text>
-      <mu-text-field label="评论内容" labelFloat multiLine :rows="1" :rowsMax="6" v-model="comment" :fullWidth="true"/>
+      <mu-text-field label="评论内容" labelFloat multiLine :rows="2" :rowsMax="6" v-model="comment" :fullWidth="true"/>
     </mu-card-text>
     <mu-raised-button slot="actions" label="取消" @click="close" />
     <mu-raised-button slot="actions" label="确定" :disabled="!canSave" @click="save" primary/>

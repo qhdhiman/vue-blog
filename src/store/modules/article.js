@@ -38,6 +38,7 @@ const mutations = {
     }
   },
   [types.SET_ARTICLE_COMMENT] (state, comment) {
+    comment.user = state.article.owner
     state.article.comments.push(comment)
   }
 }
