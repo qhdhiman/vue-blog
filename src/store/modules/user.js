@@ -7,8 +7,8 @@ import TokenServ from '@/api/Token'
  */
 const state = {
   user: {
+    _id: '',
     name: '',
-    password: '',
     head: '',
     phone: ''
   }
@@ -61,8 +61,8 @@ const mutations = {
   [types.SET_LOGIN_USER] (state, user) {
     console.log('user', user)
     state.user = {
+      _id: user._id,
       name: user.name,
-      password: user.password,
       head: user.head,
       phone: user.phone
     }

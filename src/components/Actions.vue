@@ -1,16 +1,17 @@
 <template>
   <div>
-    <mu-flat-button icon="thumb_up" label="点赞" @click="like"/>
-    <mu-flat-button icon="feedback" label="评论" @click="comment"/>
+    <mu-flat-button v-if="!isLiked" icon="thumb_up" label="点赞" @click="like"/>
+    <mu-flat-button v-else icon="thumb_up" label="取消点赞" @click="unlike"/>
+    <mu-flat-button icon="feedback" label="评论" @click="$refs.commentDialog.open()"/>
     <mu-flat-button icon="favorite_border" label="收藏" @click="favorite"/>
-    <DialogComment v-model="dialog"></DialogComment>
+
+    <DialogComment ref="commentDialog" @input="comment"></DialogComment>
   </div>
 </template>
 
 <script>
-  import { mapMutations } from 'vuex'
-  import * as types from '@/store/mutations-type'
   import DialogComment from './dialog/Comment'
+  import ArticleServ from '@/services/ArticleServ'
   export default {
     name: 'actions',
     props: {
@@ -18,19 +19,75 @@
     },
     data () {
       return {
-        dialog: false
+        isCommenting: false
+      }
+    },
+    computed: {
+      user () {
+        return this.$root.loginUser
+      },
+      articleId () {
+        return this.article._id
+      },
+      toast () {
+        return this.$root.$children[0]
+      },
+      isLiked () {
+        return this.article.likes && this.article.likes.findIndex(item => item.user._id === this.user._id) >= 0
       }
     },
     methods: {
-      ...mapMutations({
-        setArticle: types.SET_ARTICLE
-      }),
-      like () {
-
+      /**
+       * 点赞
+       */
+      async like () {
+        const res = await ArticleServ.like({articleId: this.articleId})
+        if (res.result === 'ok') {
+          this.toast.showToast({message: '点赞成功'})
+          this.article.likes.push({
+            article: this.articleId,
+            user: this.user
+          })
+        } else {
+          this.toast.showToast({message: `点赞失败:${res.data}`})
+        }
       },
-      comment () {
-        this.setArticle(this.article)
-        this.dialog = true
+      /**
+       * 取消点赞
+       */
+      async unlike () {
+        const res = await ArticleServ.unlike({articleId: this.articleId})
+        if (res.result === 'ok') {
+          this.toast.showToast({message: '取消点赞成功'})
+          const exits = this.article.likes.findIndex(item => item.user._id === this.user._id)
+          if (exits !== -1) this.article.likes.splice(exits, 1)
+        } else {
+          this.toast.showToast({message: `取消点赞失败:${res.data}`})
+        }
+      },
+      /**
+       * 评论
+       */
+      async comment (comment) {
+        if (this.isCommenting) return
+        this.isCommenting = true
+        const params = {
+          articleId: this.articleId,
+          comment: comment
+        }
+        const res = await ArticleServ.comment(params)
+        if (res.result === 'ok') {
+          this.toast.showToast({message: '评论成功'})
+          this.article.comments.push({
+            article: this.articleId,
+            user: this.user,
+            comment: comment
+          })
+          this.$refs.commentDialog.close()
+        } else {
+          this.toast.showToast({message: `评论失败:${res.data}`})
+        }
+        this.isCommenting = false
       },
       favorite () {
 

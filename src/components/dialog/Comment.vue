@@ -1,5 +1,5 @@
 <template>
-  <mu-dialog :open="value" title="评论" titleClass="title" @close="close">
+  <mu-dialog :open="show" title="评论" titleClass="title" @close="close">
     <mu-card-text>
       <mu-text-field label="评论内容" labelFloat multiLine :rows="2" :rowsMax="6" v-model="comment" :fullWidth="true"/>
     </mu-card-text>
@@ -9,46 +9,29 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'comment',
-  props: {
-    value: [Boolean]
-  },
   data () {
     return {
+      show: false,
       comment: ''
     }
   },
   computed: {
-    ...mapGetters(['article']),
     canSave () {
       return this.comment
-    },
-    toast () {
-      return this.$root.$children[0]
     }
   },
   methods: {
-    close () {
-      this.$emit('input', false)
+    open () {
+      this.show = true
     },
-    ...mapActions({
-      setComment: 'comment'
-    }),
-    async save () {
-      console.log(this.article)
-      const params = {
-        articleId: this.article._id,
-        comment: this.comment
-      }
-      const res = await this.setComment(params)
-      if (res.result === 'ok') {
-        this.toast.showToast({message: '评论成功'})
-        this.close()
-      } else {
-        this.toast.showToast({message: `评论失败:${res.data}`})
-      }
+    close () {
+      this.show = false
+      this.comment = ''
+    },
+    save () {
+      this.$emit('input', this.comment)
     }
   }
 }

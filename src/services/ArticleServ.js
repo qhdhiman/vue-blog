@@ -54,10 +54,35 @@ const comment = async ({articleId, comment}) => {
   const res = await $http.post(`${act}/comment`, params).then(res => res.json())
   return res
 }
+/**
+ * 点赞
+ * @param {*} param0
+ */
+const like = async ({articleId}) => {
+  const params = {
+    articleId
+  }
+  const res = await $http.post(`${act}/like`, params).then(res => res.json())
+  return res
+}
+/**
+ * 取消点赞
+ * @param {*} param0
+ */
+const unlike = async ({articleId}) => {
+  const params = {
+    articleId
+  }
+  const res = await $http.post(`${act}/unlike`, params).then(res => res.json())
+  return res
+}
+
 export default {
   listByUserId,
   all,
   add,
-  comment
+  comment,
+  like,
+  unlike
 }
 
