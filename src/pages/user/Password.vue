@@ -2,12 +2,12 @@
   <div class="container">
     <mu-card>
       <mu-card-text>
-        <mu-text-field label="用户名\手机号" labelFloat v-model="name"/>
-        <mu-text-field label="密码" type="password" labelFloat v-model="password"/>
+        <mu-text-field label="旧密码" labelFloat type="password" v-model="pwd"/>
+        <mu-text-field label="新密码" labelFloat type="password" v-model="password"/>
+        <mu-text-field label="确认密码" labelFloat type="password" v-model="password2"/>
       </mu-card-text>
       <mu-card-actions>
-        <mu-raised-button :disabled="!canSave" @click="save" label="登录" class="demo-raised-button" secondary/>
-        <mu-flat-button label="注册"/>
+        <mu-raised-button :disabled="!canSave" fullWidth @click="save" label="保存" secondary/>
       </mu-card-actions>
     </mu-card>
   </div>
@@ -16,11 +16,12 @@
 <script>
   import ArticleServ from '@/services/ArticleServ'
   export default {
-    name: 'Signin',
+    name: 'Password',
     data () {
       return {
-        name: '',
-        password: ''
+        pwd: '',
+        password: '',
+        password2: ''
       }
     },
     computed: {
@@ -32,6 +33,8 @@
     },
     methods: {
       async save () {
+        console.log('title', this.title)
+        console.log('content', this.content)
         const params = {
           title: this.title,
           content: this.content,

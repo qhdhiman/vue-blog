@@ -1,13 +1,17 @@
 <template>
   <div>
     <mu-appbar title="知识库">
-      <mu-avatar v-if="isLogin" :src="loginUser.head" slot="left"/>
+      <mu-avatar v-if="isLogin" :src="loginUser.head" slot="left" @click="goProfile"/>
       <mu-icon-menu icon="more_vert" slot="right"  @change="handleChange">
         <template v-if="!isLogin">
           <mu-menu-item title="注册" value="signup"/>
           <mu-menu-item title="登录" value="signin" />
         </template>
-        <mu-menu-item v-else title="退出" value="signout" />
+        <template v-else>
+          <mu-menu-item title="修改信息" value="profile"/>
+          <mu-menu-item title="修改密码" value="password" />
+          <mu-menu-item title="退出" value="signout" />
+        </template>
       </mu-icon-menu>
     </mu-appbar>
     <dialog-signin v-model="signin"></dialog-signin>
@@ -43,10 +47,23 @@ export default {
         case 'signup':
           this.signup = true
           break
+        case 'profile':
+          this.goProfile()
+          break
+        case 'password':
+          this.goPassword()
+          break
         case 'signout':
           this.$root.signout()
+          this.$router.go(-history.length)
           break
       }
+    },
+    goProfile () {
+      this.$router.push({path: '/user/profile'})
+    },
+    goPassword () {
+      this.$router.push({path: '/user/pwd'})
     }
   },
   components: {

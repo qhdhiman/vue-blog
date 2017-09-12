@@ -6,6 +6,8 @@ import Add from '@/pages/article/Add'
 
 import Signin from '@/pages/user/Signin'
 import Signup from '@/pages/user/Signup'
+import Profile from '@/pages/user/Profile'
+import Password from '@/pages/user/Password'
 
 Vue.use(Router)
 
@@ -31,6 +33,21 @@ export default new Router({
       path: '/signup',
       name: 'signup',
       component: Signup
+    }, {
+      path: '/user',
+      name: 'user',
+      component: {
+        template: '<router-view></router-view>'
+      },
+      children: [{
+        path: 'profile',
+        name: 'profile',
+        component: Profile
+      }, {
+        path: 'pwd',
+        name: 'pwd',
+        component: Password
+      }]
     }
     // , {
     //   path: '/article',

@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <TopBar></TopBar>
     <mu-card>
       <mu-card-text>
         <mu-text-field label="用户名" labelFloat v-model="name"/>
@@ -16,7 +15,6 @@
 </template>
 
 <script>
-  import TopBar from '@/components/TopBar'
   import ArticleServ from '@/services/ArticleServ'
   export default {
     name: 'Signup',
@@ -49,9 +47,6 @@
           this.$router.back()
         }
       }
-    },
-    components: {
-      TopBar
     }
   }
 </script>
