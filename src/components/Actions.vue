@@ -89,8 +89,20 @@
         }
         this.isCommenting = false
       },
-      favorite () {
-
+      /**
+       * 收藏
+       */
+      async favorite () {
+        const params = {
+          articleId: this.articleId
+        }
+        const res = await ArticleServ.favorite(params)
+        if (res.result === 'ok') {
+          this.toast.showToast({message: '收藏成功'})
+          this.$emit('favorite', res.data)
+        } else {
+          this.toast.showToast({message: `收藏失败:${res.data}`})
+        }
       }
     },
     components: {

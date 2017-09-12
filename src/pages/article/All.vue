@@ -12,7 +12,7 @@
             {{item.content}}
           </mu-card-text>
           <mu-card-actions>
-            <Actions :article="item"></Actions>
+            <Actions :article="item" @favorite="refresh"></Actions>
           </mu-card-actions>
           <mu-list v-if="item.comments.length > 0">
             <mu-sub-header>评论</mu-sub-header>

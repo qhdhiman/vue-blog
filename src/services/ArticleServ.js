@@ -76,6 +76,16 @@ const unlike = async ({articleId}) => {
   const res = await $http.post(`${act}/unlike`, params).then(res => res.json())
   return res
 }
+/**
+ * 收藏
+ * @param {*} param
+ */
+const favorite = async ({articleId}) => {
+  const params = {
+    articleId
+  }
+  return await $http.post(`${act}/favorite`, params).then(res => res.json())
+}
 
 export default {
   listByUserId,
@@ -83,6 +93,7 @@ export default {
   add,
   comment,
   like,
-  unlike
+  unlike,
+  favorite
 }
 
