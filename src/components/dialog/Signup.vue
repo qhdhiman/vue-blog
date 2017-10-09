@@ -47,7 +47,7 @@ export default {
       }
       const res = await this.signup(params)
       if (res.result === 'ok') {
-        this.toast.showToast({message: '保存成功'})
+        this.toast.showToast({message: '注册成功'})
         this.close()
       } else {
         this.toast.showToast({message: `注册失败:${res.data}`})
