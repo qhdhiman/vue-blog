@@ -4,27 +4,35 @@
     <mu-list>
       <template v-for="item in list">
         <mu-card>
-          <mu-card-header v-if="item['user_id']" :title="item['user_id'].name" subTitle="欲望以提升热情 毅力以磨平高山">
-            <mu-avatar :src="item['user_id'].head" slot="avatar"/>
+          <mu-card-header  v-if="item['owner']" @click.native="goList(item['owner']._id)" :title="item['owner'].name" subTitle="欲望以提升热情 毅力以磨平高山">
+            <mu-avatar :src="item['owner'].head" slot="avatar"/>
           </mu-card-header>
           <mu-card-title :title="item.title" :subTitle="item.create_time | time"/>
           <mu-card-text>
             {{item.content}}
           </mu-card-text>
           <mu-card-actions>
-            <mu-flat-button label="点赞"/>
-            <mu-flat-button label="评论"/>
-            <mu-flat-button label="收藏"/>
+            <actions :article="item" @favorite="refresh"></actions>
           </mu-card-actions>
+          <mu-list v-if="item.comments.length > 0">
+            <mu-sub-header>评论</mu-sub-header>
+            <template v-for="comment in item.comments" v-if="comment.user">
+              <mu-divider/>
+              <mu-list-item :title="comment.comment">
+                <mu-avatar :src="comment.user.head" slot="leftAvatar" :size="30"/>
+                <!-- <mu-icon value="chat_bubble" slot="right"/> -->
+              </mu-list-item>
+            </template>
+          </mu-list>
         </mu-card>
       </template>
     </mu-list>
     <mu-infinite-scroll v-if="!isEnd" :scroller="scroller" :loading="loading" @load="loadMore"/>
     <p class="text-center" v-else>已经到底了</p>
-    <mu-float-button v-if="$root.isLogin" icon="add" class="fixed-button" :to="{path:'add'}"/>
   </div>
 </template>
 <script>
+import Actions from '@/components/Actions'
 import ArticleServ from '@/services/ArticleServ'
 import Moment from 'moment'
 Moment.locale('zh-cn')
@@ -73,6 +81,9 @@ export default {
       this.list.push(...res.data)
       this.loading = false
     }
+  },
+  components: {
+    Actions
   }
 }
 </script>

@@ -12,15 +12,15 @@
             {{item.content}}
           </mu-card-text>
           <mu-card-actions>
-            <Actions :article="item" @favorite="refresh"></Actions>
+            <actions :article="item" @favorite="refresh"></actions>
           </mu-card-actions>
           <mu-list v-if="item.comments.length > 0">
             <mu-sub-header>评论</mu-sub-header>
             <template v-for="comment in item.comments" v-if="comment.user">
               <mu-divider/>
               <mu-list-item :title="comment.comment">
-                <mu-avatar :src="comment.user.head" slot="leftAvatar"/>
-                <mu-icon value="chat_bubble" slot="right"/>
+                <mu-avatar :src="comment.user.head" slot="leftAvatar" :size="30"/>
+                <!-- <mu-icon value="chat_bubble" slot="right"/> -->
               </mu-list-item>
             </template>
           </mu-list>
