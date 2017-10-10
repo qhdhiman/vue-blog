@@ -1,5 +1,5 @@
 <template>
-  <mu-dialog :open="value" title="登录" titleClass="title" @close="close">
+  <mu-dialog :open="showDialog" title="登录" titleClass="title" @close="close">
     <mu-card-text>
       <mu-text-field label="用户名" labelFloat v-model="name" :fullWidth="true"/>
       <mu-text-field label="密码" type="password" labelFloat v-model="password" :fullWidth="true"/>
@@ -14,9 +14,6 @@
 
   export default {
     name: 'signin',
-    props: {
-      value: [Boolean]
-    },
     data () {
       return {
         name: '',
@@ -24,6 +21,9 @@
       }
     },
     computed: {
+      showDialog () {
+        return this.$root.showSignin
+      },
       canSave () {
         return this.name && this.password
       },
@@ -32,8 +32,13 @@
       }
     },
     methods: {
+      open () {
+        this.$root.showSignin = true
+      },
       close () {
-        this.$emit('input', false)
+        this.$root.showSignin = false
+        this.name = ''
+        this.password = ''
       },
       ...mapActions({
         signin: 'signin' // 映射 this.signin() 为 this.$store.dispatch('signin')

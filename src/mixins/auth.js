@@ -1,6 +1,11 @@
 import { mapGetters, mapActions } from 'vuex'
 import TokenServ from '@/api/Token'
 export default {
+  data () {
+    return {
+      showSignin: false
+    }
+  },
   computed: {
     ...mapGetters({loginUser: 'loginUser'}),
     isLogin () { // 用户是否登录

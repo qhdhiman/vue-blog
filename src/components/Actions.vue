@@ -2,7 +2,7 @@
   <div>
     <mu-flat-button v-if="!isLiked" icon="thumb_up" label="点赞" @click="like"/>
     <mu-flat-button v-else icon="thumb_up" label="取消点赞" @click="unlike"/>
-    <mu-flat-button icon="feedback" label="评论" @click="$refs.commentDialog.open()"/>
+    <mu-flat-button icon="feedback" label="评论" @click="showComment"/>
     <mu-flat-button icon="favorite_border" label="收藏" @click="favorite"/>
 
     <DialogComment ref="commentDialog" @input="comment"></DialogComment>
@@ -37,10 +37,19 @@
       }
     },
     methods: {
+      isLogin () {
+        if (!this.user._id) this.$root.showSignin = true
+        return !this.$root.showSignin
+      },
+      showComment () {
+        if (!this.isLogin()) return
+        this.$refs.commentDialog.open()
+      },
       /**
        * 点赞
        */
       async like () {
+        if (!this.isLogin()) return
         const res = await ArticleServ.like({articleId: this.articleId})
         if (res.result === 'ok') {
           this.toast.showToast({message: '点赞成功'})
@@ -56,6 +65,7 @@
        * 取消点赞
        */
       async unlike () {
+        if (!this.isLogin()) return
         const res = await ArticleServ.unlike({articleId: this.articleId})
         if (res.result === 'ok') {
           this.toast.showToast({message: '取消点赞成功'})
@@ -93,6 +103,7 @@
        * 收藏
        */
       async favorite () {
+        if (!this.isLogin()) return
         const params = {
           articleId: this.articleId
         }

@@ -1,5 +1,5 @@
 <template>
-  <mu-dialog :open="value" title="注册" titleClass="title" @close="close">
+  <mu-dialog :open="showDialog" title="注册" titleClass="title" @close="close">
     <mu-card-text>
       <mu-text-field label="用户名" labelFloat v-model="name" :fullWidth="true"/>
       <mu-text-field label="手机号" labelFloat v-model="phone" :fullWidth="true"/>
@@ -14,11 +14,9 @@
 import { mapActions } from 'vuex'
 export default {
   name: 'signup',
-  props: {
-    value: [Boolean]
-  },
   data () {
     return {
+      showDialog: false,
       name: '',
       phone: '',
       password: ''
@@ -33,8 +31,14 @@ export default {
     }
   },
   methods: {
+    open () {
+      this.showDialog = true
+    },
     close () {
-      this.$emit('input', false)
+      this.showDialog = false
+      this.name = ''
+      this.phone = ''
+      this.password = ''
     },
     ...mapActions({
       signup: 'signup' // 映射 this.signup() 为 this.$store.dispatch('signup')

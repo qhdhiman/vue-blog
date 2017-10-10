@@ -3,6 +3,7 @@
     <mu-appbar title="知识库">
       <mu-avatar v-if="isLogin" :src="loginUser.head" slot="left" @click="goProfile"/>
       <mu-icon-menu icon="more_vert" slot="right"  @change="handleChange">
+        <mu-menu-item title="主页" value="home"/>
         <template v-if="!isLogin">
           <mu-menu-item title="注册" value="signup"/>
           <mu-menu-item title="登录" value="signin" />
@@ -14,8 +15,8 @@
         </template>
       </mu-icon-menu>
     </mu-appbar>
-    <dialog-signin v-model="signin"></dialog-signin>
-    <dialog-signup v-model="signup"></dialog-signup>
+    <dialog-signin ref="signin"></dialog-signin>
+    <dialog-signup ref="signup"></dialog-signup>
   </div>
 </template>
 
@@ -24,12 +25,6 @@ import DialogSignin from '@/components/dialog/Signin'
 import DialogSignup from '@/components/dialog/Signup'
 export default {
   name: 'TopBar',
-  data () {
-    return {
-      signup: false,
-      signin: false
-    }
-  },
   computed: {
     loginUser () {
       return this.$root.loginUser
@@ -42,10 +37,11 @@ export default {
     handleChange (value) {
       switch (value) {
         case 'signin':
-          this.signin = true
+          console.log(this.$refs)
+          this.$refs.signin.open()
           break
         case 'signup':
-          this.signup = true
+          this.$refs.signup.open()
           break
         case 'profile':
           this.goProfile()
@@ -57,6 +53,9 @@ export default {
           this.$root.signout()
           this.$router.go(-history.length)
           break
+        case 'home':
+          this.$router.push({path: '/'})
+          break
       }
     },
     goProfile () {
@@ -65,6 +64,11 @@ export default {
     goPassword () {
       this.$router.push({path: '/user/pwd'})
     }
+  },
+  mounted () {
+    this.$on('signup', (value) => {
+      console.log('signup', value)
+    })
   },
   components: {
     DialogSignin,
