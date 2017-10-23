@@ -4,6 +4,7 @@
     <mu-flat-button v-else icon="thumb_up" label="取消点赞" @click="unlike"/>
     <mu-flat-button icon="feedback" label="评论" @click="showComment"/>
     <mu-flat-button icon="favorite_border" label="收藏" @click="favorite"/>
+    <mu-flat-button icon="delete" label="删除" @click="remove" v-if="user._id === article.owner._id"/>
 
     <DialogComment ref="commentDialog" @input="comment"></DialogComment>
   </div>
@@ -114,6 +115,12 @@
         } else {
           this.toast.showToast({message: `收藏失败:${res.data}`})
         }
+      },
+      /**
+       * 删除
+       */
+      async remove () {
+        this.toast.showToast({message: `删除失败`})
       }
     },
     components: {

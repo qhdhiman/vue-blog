@@ -2,6 +2,10 @@
   <div>
     <mu-appbar title="知识库">
       <mu-avatar v-if="isLogin" :src="loginUser.head" slot="left" @click="goProfile"/>
+      <template>
+        <mu-text-field icon="search" class="appbar-search-field" v-show="focus" @blur="focus=false" slot="right" hintText="请输入搜索内容" />
+        <mu-icon-button slot="right" icon="search" v-show="!focus" @click="focus=true"/>
+      </template>
       <mu-icon-menu icon="more_vert" slot="right"  @change="handleChange">
         <mu-menu-item title="主页" value="home"/>
         <template v-if="!isLogin">
@@ -25,6 +29,11 @@ import DialogSignin from '@/components/dialog/Signin'
 import DialogSignup from '@/components/dialog/Signup'
 export default {
   name: 'TopBar',
+  data () {
+    return {
+      focus: false
+    }
+  },
   computed: {
     loginUser () {
       return this.$root.loginUser
@@ -78,10 +87,26 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
   .mu-appbar {
     position: fixed;
     top:0;
     left:0;
+  }
+  .appbar-search-field {
+    color: #FFF;
+    margin-bottom: 0;
+  }
+  .appbar-search-field.focus-state {
+    color: #FFF;
+  }
+  .appbar-search-field .mu-text-field-hint {
+    color:hsla(0,0%,100%,.54)
+  }
+  .appbar-search-field .mu-text-field-input {
+    color: #FFF;
+  }
+  .appbar-search-field .mu-text-field-focus-line {
+    background-color: #FFF;
   }
 </style>
