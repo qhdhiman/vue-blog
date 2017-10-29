@@ -6,10 +6,7 @@
 
 ## 演示
 
-<video id="video" style="width:240px;" controls="" preload="none" poster="./doc/index.png">
-      <source id="mp4" src="./index.mp4" type="video/mp4">
-      <p>Your user agent does not support the HTML5 Video element.</p>
-    </video>
+![知识库](./doc/index.png =320x240)
 
 ## 项目依赖
 ```
