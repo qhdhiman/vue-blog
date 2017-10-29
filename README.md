@@ -1,8 +1,29 @@
-# vue-blog
+# 在线知识分享项目 [前端项目]
 
-> A Vue.js project
+> 在线知识分享项目是作者个人毕业项目。
+<br>项目技术栈为: (vue2 + muse-ui) + (Node.js + Koa2 + JWT) + (MongoDB)
+<br>欢迎喜欢的朋友下载使用
 
-## Build Setup
+## 演示
+
+<video id="video" style="width:240px;" controls="" preload="none" poster="./doc/index.png">
+      <source id="mp4" src="./index.mp4" type="video/mp4">
+      <p>Your user agent does not support the HTML5 Video element.</p>
+    </video>
+
+## 项目依赖
+```
+
+    "moment": "^2.18.1",
+    "muse-ui": "^2.1.0",
+    "vue": "^2.3.3",
+    "vue-resource": "^1.3.4",
+    "vue-router": "^2.6.0",
+    "vuex": "^2.3.1"
+```
+
+
+## 启动项目
 
 ``` bash
 # install dependencies
@@ -24,4 +45,4 @@ npm run unit
 npm test
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
