@@ -7,6 +7,7 @@ import store from './store'
 import auth from './mixins/auth'
 import MuseUI from 'muse-ui'
 import 'muse-ui/dist/muse-ui.css'
+import './mock' // 引入mock
 Vue.use(MuseUI)
 Vue.config.productionTip = false
 
