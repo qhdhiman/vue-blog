@@ -85,6 +85,9 @@
 │  ├─router // 路由目录
 │  │      index.js // 路由配置
 │  │
+│  ├─mock // mock模拟数据目录
+│  │      index.js //
+│  │
 │  ├─services // 服务目录
 │  │      ArticleServ.js // 知识服务类
 │  │      UserServ.js // 用户服务类
@@ -114,7 +117,7 @@
 
 ## 演示
 
-![知识库](./docs/index.png =320x240)
+请跳转到这里： https://qhdhiman.github.io/vue-blog/#/ 
 
 ## 项目依赖
 ```
