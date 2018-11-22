@@ -49,6 +49,7 @@ const actions = {
   },
   async signout ({commit, state}) {
     // const res = await UserServ.signout()
+    UserServ.signout()
     // if (res.result === 'ok') {
     TokenServ.setItem('')
     commit(types.SET_LOGIN_USER, {})
