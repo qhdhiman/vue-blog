@@ -1,6 +1,6 @@
-# 在线知识分享项目 [前端项目]
+# 在线博客项目 [前端项目]
 
-> 在线知识分享项目是作者个人毕业项目。
+> 在线博客。
 <br>项目技术栈为: (vue2 + muse-ui) + (Node.js + Koa2 + JWT) + (MongoDB)
 <br>欢迎喜欢的朋友下载使用
 <br> 在线预览地址： https://qhdhiman.github.io/vue-blog/#/
