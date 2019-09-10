@@ -2,7 +2,7 @@
   "name": "vue-blog",
   "version": "1.0.0",
   "description": "A Vue.js project",
-  "author": "邵铁军 <shaotiejun@syswin.com>",
+  "author": "邵铁军 <shaotiejun@qq.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
@@ -13,6 +13,7 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs"
   },
   "dependencies": {
+    "mockjs": "1.0.1-beta3",
     "moment": "^2.18.1",
     "muse-ui": "^2.1.0",
     "vue": "^2.3.3",
